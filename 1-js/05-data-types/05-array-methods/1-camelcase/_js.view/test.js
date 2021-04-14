@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 describe("camelize", function() {
 
   it("leaves an empty line as is", function() {
