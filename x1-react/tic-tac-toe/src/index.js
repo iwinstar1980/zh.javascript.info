@@ -33,14 +33,16 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            squares: Array(9).fill(null),
-            xIsNext: true,
-        }
-    }
+    //由Game组件统一管理state，所以这里的构造函数就不需要了
+    //    constructor(props) {
+    //        super(props);
+    //        this.state = {
+    //            squares: Array(9).fill(null),
+    //            xIsNext: true,
+    //        }
+    //    }
 
+    // 在 React 中，有一个命名规范，通常会将处理事件的监听方法命名为 handle[Event] 这样的格式
     handleClick(i) {
         // 调用了 .slice() 方法创建了 squares 数组的一个副本，而不是直接在现有的数组上进行修改
         const squares = this.state.squares.slice();
@@ -58,9 +60,8 @@ class Board extends React.Component {
     renderSquare(i) {
         return (
             <Square
-                value={this.state.squares[i]}
-                // 在 React 中，有一个命名规范，通常会将处理事件的监听方法命名为 handle[Event] 这样的格式
-                onClick={() => this.handleClick(i)}
+                value={this.props.squares[i]}
+                onClick={() => this.props.onClick(i)}
             />
         );
     }
@@ -98,6 +99,14 @@ class Board extends React.Component {
 }
 
 class Game extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            history: [{squares: Array(9).fill(null)}],
+            xIsNext: true,
+        };
+    }
+
     render() {
         return (
             <div className="game">
